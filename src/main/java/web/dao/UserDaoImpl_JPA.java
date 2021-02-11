@@ -1,18 +1,19 @@
 package web.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import web.models.User;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserDaoImpl_JPA implements UserDao {
 
-    @Autowired
-    private EntityManagerFactory factory;
+    private final EntityManagerFactory factory;
+
+    public UserDaoImpl_JPA(EntityManagerFactory factory) {
+        this.factory = factory;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -30,27 +31,25 @@ public class UserDaoImpl_JPA implements UserDao {
     }
 
     @Override
-    public void deleteUser(long id) {
-        factory.createEntityManager().createQuery("delete from User u where u.id = :id", User.class)
+    public void deleteUser(Long id) {
+        factory.createEntityManager().createQuery("delete from User u where u.id = :id")
                 .setParameter("id", id);
     }
 
     @Override
     public void alterUser(long id, String fn, String  sn, String c) {
-        if (id != 0) {
-            User u = factory.createEntityManager().getReference(User.class, id);
+        User u = factory.createEntityManager().getReference(User.class, id);
 
-            if (fn != null) {
-                u.setFirstName(fn);
-            }
+        if (fn != null) {
+            u.setFirstName(fn);
+        }
 
-            if (sn != null) {
-                u.setSecondName(sn);
-            }
+        if (sn != null) {
+            u.setSecondName(sn);
+        }
 
-            if (c != null) {
-                u.setCellphone(c);
-            }
+        if (c != null) {
+            u.setCellphone(c);
         }
     }
 

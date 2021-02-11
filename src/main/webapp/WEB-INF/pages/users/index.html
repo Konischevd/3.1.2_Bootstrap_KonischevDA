@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все пользователи</title>
+</head>
+<body>
+<center>
+
+    <br>
+    <br>
+    <h4>Все пользователи</h4>
+    <table border="1" bordercolor="#808080" cellspacing="0" cellpadding="5">
+        <tr>
+            <th>ID</th>
+            <th>FirstName</th>
+            <th>SecondName</th>
+            <th>Cellphone</th>
+        </tr>
+        <tr th:each="user : ${all_users}">
+            <!--                th:href="${/users/{id}(id=${user.getId()})}"-->
+            <td th:text="${user.getId()}">id</td>
+            <td th:text="${user.getFirstName()}">first name</td>
+            <td th:text="${user.getSecondName()}">second name</td>
+            <td th:text="${user.getCellphone()}">cellphone</td>
+        </tr>
+    </table>
+
+    <br>
+    <br>
+    <h4>Создать Путина:</h4>
+    <form action="/users/putin" th:method="POST">
+        <button>add Putin!</button>
+    </form>
+
+    <br>
+    <br>
+    <h4>Создать нового пользователя:</h4>
+    <form action="/users" th:method="POST" th:object="${new_user}">
+
+        <input type="text" th:field="*{firstName}" required placeholder="first name">
+        <br>
+
+        <input type="text" th:field="*{secondName}" required placeholder="secondName">
+        <br>
+
+        <input type="text" th:field="*{cellphone}" required placeholder="cellphone">
+        <br>
+
+        <input type="submit" value="Создать пользователя"/>
+
+    </form>
+
+    <br>
+    <br>
+    <h4>Удалить пользователя по ID:</h4>
+    <form action="/users/delete" th:method="DELETE">
+        <input type="text" name="delete_id" required placeholder="id">
+        <br>
+        <input type="submit" value="Удалить!">
+    </form>
+
+    <br>
+    <br>
+    <h4>Изменить пользователя по ID и нескольким полям:</h4>
+    <form action="/users/update" th:method="PATCH">
+        <input type="text" name="update_id" required placeholder="id">
+        <br>
+        <input type="text" name="update_fn" placeholder="first name">
+        <br>
+        <input type="text" name="update_sn" placeholder="second name">
+        <br>
+        <input type="text" name="update_c" placeholder="cellphone">
+        <br>
+        <input type="submit" value="Изменить!">
+    </form>
+
+</center>
+</body>
+</html>
