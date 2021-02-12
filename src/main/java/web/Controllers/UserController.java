@@ -10,9 +10,7 @@ import web.service.UserService;
 @Controller
 public class UserController {
 
-
     private UserService service;
-
     public UserController(UserService service) {
         this.service = service;
     }
@@ -21,15 +19,8 @@ public class UserController {
     public String index(Model model) {
         model.addAttribute("all_users", service.getAllUsers());
         model.addAttribute("new_user", new User());
-
         return "users/index";
     }
-
-//    @GetMapping("/{id}")
-//    public String show(@PathVariable long id, Model model) {
-//        model.addAttribute("user", service.getUser(id));
-//        return "users/show";
-//    }
 
     @PostMapping
     public String create(@ModelAttribute("new_user") User u) {
@@ -39,7 +30,7 @@ public class UserController {
 
     @PostMapping("/putin")
     public String addPutin() {
-        service.addUser(new User("Vor", "Putin", "99"));
+        service.addUser(new User("Vor", "Putin", "7 777 777 7777"));
         return "redirect:/users";
     }
 
@@ -48,8 +39,6 @@ public class UserController {
                          @RequestParam("update_fn") String fn,
                          @RequestParam("update_sn") String sn,
                          @RequestParam("update_c") String c) {
-        System.out.println(id + " " + fn + " " + sn + " " + c);
-
         service.alterUser(id, fn, sn, c);
         return "redirect:/users";
     }

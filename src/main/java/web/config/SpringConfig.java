@@ -127,6 +127,13 @@ public class SpringConfig implements WebMvcConfigurer {
         return enManFacBean;
     }
 
+//    @Bean
+//    public EntityManager getEntityManager() {
+//        EntityManagerHolder holder = TransactionSynchronizationManager.getResource(getEntityManagerFactory());
+//
+//        return null;
+//    }
+
     @Bean
     public PlatformTransactionManager TransactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

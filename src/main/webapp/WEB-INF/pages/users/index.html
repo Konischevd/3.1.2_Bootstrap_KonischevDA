@@ -18,7 +18,6 @@
             <th>Cellphone</th>
         </tr>
         <tr th:each="user : ${all_users}">
-            <!--                th:href="${/users/{id}(id=${user.getId()})}"-->
             <td th:text="${user.getId()}">id</td>
             <td th:text="${user.getFirstName()}">first name</td>
             <td th:text="${user.getSecondName()}">second name</td>
@@ -37,18 +36,13 @@
     <br>
     <h4>Создать нового пользователя:</h4>
     <form action="/users" th:method="POST" th:object="${new_user}">
-
         <input type="text" th:field="*{firstName}" required placeholder="first name">
         <br>
-
         <input type="text" th:field="*{secondName}" required placeholder="secondName">
         <br>
-
         <input type="text" th:field="*{cellphone}" required placeholder="cellphone">
         <br>
-
         <input type="submit" value="Создать пользователя"/>
-
     </form>
 
     <br>
