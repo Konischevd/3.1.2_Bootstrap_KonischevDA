@@ -7,6 +7,7 @@ import web.models.Role;
 import web.models.User;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -20,6 +21,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Role getRoleByName(String name) {
         return userDao.getRoleByName(name);
+    }
+
+    @Override
+    public Set<Role> getRolesFromText(String text) {
+        return userDao.getRolesFromText(text);
     }
 
     @Transactional(readOnly = true)
@@ -54,13 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void alterUser(long id,
-                          String log,
-                          String pas,
-                          String rol,
-                          String fn,
-                          String sn,
-                          String c) {
-        userDao.alterUser(id, log, pas, rol, fn, sn, c);
+    public void updateUser(long id, String log, String pas, String rol, String fn, String sn, String c) {
+        userDao.updateUser(id, log, pas, rol, fn, sn, c);
     }
 }

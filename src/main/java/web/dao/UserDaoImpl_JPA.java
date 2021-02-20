@@ -19,25 +19,42 @@ public class UserDaoImpl_JPA implements UserDao {
 
 
 
-
-
-
     @Override
     public Role getRoleByName(String name) {
-        try {entityManager
+        try {   // пробуем достать роль
+            entityManager
                     .createQuery("select r from Role r where r.role = :name", Role.class)
                     .setParameter("name", name)
                     .getSingleResult();
         } catch (NoResultException e) {
+            // если такой роли не существует в БД, то добавляем её
             Role r = new Role();
             r.setRole(name);
             entityManager.persist(r);
         }
-
+        // заново достаём роль из БД
         return entityManager
                 .createQuery("select r from Role r where r.role = :name", Role.class)
                 .setParameter("name", name)
                 .getSingleResult();
+    }
+
+    @Override
+    public Set<Role> getRolesFromText(String text) {
+        Set<Role> roles = new HashSet<>();
+
+        text = text.toLowerCase();
+
+        if ( text.contains("admin") ) {
+            Role role = getRoleByName("ROLE_ADMIN");
+            roles.add(role);
+        }
+        if ( text.contains("user") ) {
+            Role role = getRoleByName("ROLE_USER");
+            roles.add(role);
+        }
+
+        return roles;
     }
 
     @Override
@@ -68,53 +85,15 @@ public class UserDaoImpl_JPA implements UserDao {
     }
 
     @Override
-    public void alterUser(long id,
-                          String log,
-                          String pas,
-                          String rol,
-                          String fn,
-                          String sn,
-                          String c) {
-
+    public void updateUser(long id, String log, String pas, String rol, String fn, String sn, String c) {
         User u = entityManager.getReference(User.class, id);
 
-        if (log != null && log.length() > 0) {
-            u.setLogin(log);
-        }
-
-        if (pas != null && pas.length() > 0) {
-            u.setPassword(pas);
-        }
-
-
-        if (rol != null && rol.length() > 0) {
-            rol = rol.toLowerCase();
-            Set<Role> newRoles = new HashSet<>();
-
-            if ( rol.contains("admin") ) {
-                Role role = getRoleByName("ROLE_ADMIN");
-                newRoles.add(role);
-            }
-
-            if ( rol.contains("user") ) {
-                Role role = getRoleByName("ROLE_USER");
-                newRoles.add(role);
-            }
-            u.setRoles(newRoles);
-        }
-
-
-        if (fn != null && fn.length() > 0) {
-            u.setFirstName(fn);
-        }
-
-        if (sn != null && sn.length() > 0) {
-            u.setSecondName(sn);
-        }
-
-        if (c != null && c.length() > 0) {
-            u.setCellphone(c);
-        }
+        if (   log.length() > 0 )   {   u.setLogin(log);                            }
+        if (   pas.length() > 0 )   {   u.setPassword(pas);                         }
+        if (   rol.length() > 0 )   {   u.setRoles(   getRolesFromText(rol)   );    }
+        if (   fn.length() > 0  )   {   u.setFirstName(fn);                         }
+        if (   sn.length() > 0  )   {   u.setSecondName(sn);                        }
+        if (   c.length() > 0   )   {   u.setCellphone(c);                          }
     }
 
 }

@@ -4,10 +4,13 @@ import web.models.Role;
 import web.models.User;
 
 import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
     Role getRoleByName(String name);
+
+    public Set<Role> getRolesFromText(String text);
 
     List<User> getAllUsers();
 
@@ -19,12 +22,6 @@ public interface UserService {
 
     void deleteUser(Long id);
 
-    void alterUser(long id,
-                   String log,
-                   String pas,
-                   String rol,
-                   String fn,
-                   String sn,
-                   String c);
+    void updateUser(long id, String log, String pas, String rol, String fn, String sn, String c);
 
 }

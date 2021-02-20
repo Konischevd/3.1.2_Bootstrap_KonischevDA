@@ -4,13 +4,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import web.models.Role;
 import web.models.User;
 import web.service.UserService;
 
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -80,23 +77,7 @@ public class UserController {
 
     @PostMapping("/admin/create")
     public String create(@ModelAttribute("new_user") User u, @RequestParam("new_user_roles") String rol) {
-
-        if (rol != null && rol.length() > 0) {
-            rol = rol.toLowerCase();
-            Set<Role> newRoles = new HashSet<>();
-
-            if ( rol.contains("admin") ) {
-                Role role = service.getRoleByName("ROLE_ADMIN");
-                newRoles.add(role);
-            }
-
-            if ( rol.contains("user") ) {
-                Role role = service.getRoleByName("ROLE_USER");
-                newRoles.add(role);
-            }
-            u.setRoles(newRoles);
-        }
-
+        u.setRoles(service.getRolesFromText(rol));
         service.addUser(u);
         return "redirect:/admin";
     }
@@ -116,8 +97,9 @@ public class UserController {
                          @RequestParam("update_rol") String rol,
                          @RequestParam("update_fn") String fn,
                          @RequestParam("update_sn") String sn,
-                         @RequestParam("update_c") String c) {
-        service.alterUser(id, log, pas, rol, fn, sn, c);
+                         @RequestParam("update_c") String c)
+    {
+        service.updateUser(id, log, pas, rol, fn, sn, c);
         return "redirect:/admin";
     }
 
