@@ -33,11 +33,7 @@ import java.util.Properties;
 public class SpringConfig implements WebMvcConfigurer {
                                   // WebMvcConfigurer для переопределения метода configureViewResolvers
 
-    // Контекст автоматически подтягивает Spring
     private final ApplicationContext applicationContext;
-
-    // Конструктор, чтобы подтянуть ApplicationContext
-    @Autowired
     public SpringConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }

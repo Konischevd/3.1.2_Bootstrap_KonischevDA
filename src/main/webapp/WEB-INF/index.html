@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница сайта</title>
+</head>
+<body>
+<center>
+
+    <br>
+    <br>
+    <form action="/admin">
+        <button>Страница админа</button>
+    </form>
+
+    <br>
+    <form th:href="@{   /{login}
+                        ( login = ${user.getLogin() } )
+                    }">
+        <button>Страница пользователя</button>
+    </form>
+
+</center>
+</body>
+</html>

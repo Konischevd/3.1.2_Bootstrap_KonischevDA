@@ -14,9 +14,15 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <spring.version>5.4.4</spring.version>
+
+    <!--          для соранения в БД русских символов из POST запроса       -->
+    <project.java.version>1.8</project.java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!--          для соранения в БД русских символов из POST запроса       -->
   </properties>
 
   <dependencies>
@@ -27,10 +33,12 @@
       <scope>test</scope>
     </dependency>
 
+<!--    SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING-->
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>5.3.3</version>
+      <version>5.3.4</version>
     </dependency>
 
 <!--    Эта зависимость позволяет нам создовать бины для доступа к БД
@@ -38,14 +46,30 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>5.3.3</version>
+      <version>5.3.4</version>
     </dependency>
 
+<!--    SECURITY    -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>5.4.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>5.4.4</version>
+    </dependency>
+
+<!--    + THYMELEAF   -->
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring5</artifactId>
       <version>3.0.12.RELEASE</version>
     </dependency>
+
+    <!--    SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING  SPRING-->
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -88,10 +112,22 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
+          <!-- для соранения в БД русских символов из POST запроса       -->
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+          <!-- для соранения в БД русских символов из POST запроса       -->
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
+          <!-- для соранения в БД русских символов из POST запроса       -->
+          <configuration>
+            <source>${project.java.version}</source>
+            <target>${project.java.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+          <!-- для соранения в БД русских символов из POST запроса       -->
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
