@@ -11,12 +11,12 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final LoginSuccessHandler handler;
     private final UserDetailsService service;
 
-    public SecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsService userDetailsService) {
+    public SpringSecurityConfig(LoginSuccessHandler loginSuccessHandler, UserDetailsService userDetailsService) {
         handler = loginSuccessHandler;
         service = userDetailsService;
     }
