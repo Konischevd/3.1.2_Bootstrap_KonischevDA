@@ -40,20 +40,14 @@ public class UserDaoImpl_JPA implements UserDao {
     }
 
     @Override
-    public Set<Role> getRolesFromText(String text) {
+    public Set<Role> getRolesFromArray(String[] input) {
+        if (input == null) {
+            return null;
+        }
         Set<Role> roles = new HashSet<>();
-
-        text = text.toLowerCase();
-
-        if ( text.contains("admin") ) {
-            Role role = getRoleByName("ROLE_ADMIN");
-            roles.add(role);
+        for (String s : input) {
+            roles.add( getRoleByName(s) );
         }
-        if ( text.contains("user") ) {
-            Role role = getRoleByName("ROLE_USER");
-            roles.add(role);
-        }
-
         return roles;
     }
 
@@ -68,9 +62,9 @@ public class UserDaoImpl_JPA implements UserDao {
     }
 
     @Override
-    public User getUserByLogin(String login) {
-        return entityManager.createQuery("select u from User u where u.login = :login", User.class)
-                .setParameter("login", login).getSingleResult();
+    public User getUserByEmail(String email) {
+        return entityManager.createQuery("select u from User u where u.email = :login", User.class)
+                .setParameter("login", email).getSingleResult();
     }
 
     @Override
@@ -85,15 +79,8 @@ public class UserDaoImpl_JPA implements UserDao {
     }
 
     @Override
-    public void updateUser(long id, String log, String pas, String rol, String fn, String sn, String c) {
-        User u = entityManager.getReference(User.class, id);
-
-        if (   log.length() > 0 )   {   u.setLogin(log);                            }
-        if (   pas.length() > 0 )   {   u.setPassword(pas);                         }
-        if (   rol.length() > 0 )   {   u.setRoles(   getRolesFromText(rol)   );    }
-        if (   fn.length() > 0  )   {   u.setFirstName(fn);                         }
-        if (   sn.length() > 0  )   {   u.setSecondName(sn);                        }
-        if (   c.length() > 0   )   {   u.setCellphone(c);                          }
+    public void updateUser(User user) {
+        entityManager.merge(user);
     }
 
 }

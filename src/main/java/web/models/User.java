@@ -17,7 +17,7 @@ public class User implements UserDetails {
 
 // Поля для UserDetails
     @Column(unique = true)
-    private String login;
+    private String email;
 
     @Column
     private String password;
@@ -30,47 +30,55 @@ public class User implements UserDetails {
     private String firstName;
 
     @Column
-    private String secondName;
+    private String lastName;
 
     @Column
-    private String cellphone;
+    private byte age;
 
 
     public User() {
     }
 
-    public User(long id, String login, String password, Set<Role> roles, String firstName, String secondName, String cellphone) {
+    public User(long id, String email, String password, Set<Role> roles, String firstName, String lastName, byte age) {
         this.id = id;
-        this.login = login;
+        this.email = email;
         this.password = password;
         this.roles = roles;
         this.firstName = firstName;
-        this.secondName = secondName;
-        this.cellphone = cellphone;
+        this.lastName = lastName;
+        this.age = age;
     }
 
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
-    public String getLogin() {
-        return login;
-    }
-    public void setLogin(String login) {
-        this.login = login;
+
+    public void setUsername(String email) {
+        this.email = email;
     }
 
     @Override
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -79,57 +87,44 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
+
     public String getRoles() {
         StringBuilder s = new StringBuilder();
-
         for (Role r : roles) {
             if (s.length() != 0) {
-                s.append(", ");
+                s.append(" ");
             }
-            s.append(r.getRole());
+            s.append(r.getRole().split("_")[1]);
         }
         return s.toString();
     }
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-//    public void setRoles(String r) {
-//        Set<Role> newRoles = new HashSet<>();
-//
-//        if (r.contains("ADMIN") || r.contains("admin")) {
-//            Role role = new Role();
-//            role.setRole("ROLE_ADMIN");
-//            newRoles.add(role);
-//        }
-//
-//        if (r.contains("user") || r.contains("USER")) {
-//            Role role = new Role();
-//            role.setRole("ROLE_USER");
-//            newRoles.add(role);
-//        }
-//
-//        this.roles = newRoles;
-//    }
 
     public String getFirstName() {
         return firstName;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getSecondName() {
-        return secondName;
-    }
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getCellphone() {
-        return cellphone;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
+
+    public byte getAge() {
+        return age;
+    }
+
+    public void setAge(byte age) {
+        this.age = age;
     }
 
 
@@ -154,4 +149,16 @@ public class User implements UserDetails {
         return this.getRoles().contains("ROLE_ADMIN");
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

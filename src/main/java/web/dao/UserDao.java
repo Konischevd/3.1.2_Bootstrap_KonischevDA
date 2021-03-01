@@ -10,18 +10,18 @@ public interface UserDao {
 
     Role getRoleByName(String name);
 
-    Set<Role> getRolesFromText(String text);
+    Set<Role> getRolesFromArray(String[] input);
 
     List<User> getAllUsers();
 
     User getUser(long id);
 
-    User getUserByLogin(String login);
+    User getUserByEmail(String login);
 
     void addUser(User user);
 
     void deleteUser(Long id);
 
-    void updateUser(long id, String log, String pas, String rol, String fn, String sn, String c);
+    void updateUser(User user);
 
 }

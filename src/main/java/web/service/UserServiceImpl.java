@@ -24,8 +24,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<Role> getRolesFromText(String text) {
-        return userDao.getRolesFromText(text);
+    public Set<Role> getRolesFromArray(String[] input) {
+        return userDao.getRolesFromArray(input);
     }
 
     @Transactional(readOnly = true)
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User getUserByLogin(String login) {
-        return userDao.getUserByLogin(login);
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
     }
 
     @Transactional
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updateUser(long id, String log, String pas, String rol, String fn, String sn, String c) {
-        userDao.updateUser(id, log, pas, rol, fn, sn, c);
+    public void updateUser(User user) {
+        userDao.updateUser(user);
     }
 }

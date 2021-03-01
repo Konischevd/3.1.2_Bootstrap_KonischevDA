@@ -48,8 +48,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
+//                .loginPage("/login")
+//                .loginProcessingUrl("/login")
                 .successHandler(handler)
 
             .and()
@@ -60,8 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
             .and()
             .authorizeRequests()
-                .antMatchers("/profile/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN");
+                .antMatchers("/user").authenticated()
+                .antMatchers("/admin").hasRole("ADMIN");
 
 
 

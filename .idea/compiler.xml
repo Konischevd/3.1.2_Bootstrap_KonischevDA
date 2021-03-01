@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="2.3.1_CRUD_Konischev_DA" />
         <module name="3.1.1_CRUD_KonischevDA_Spring-boot" />
+        <module name="3.1.2_Bootstrap_KonischevDA" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="3.1.1_CRUD_KonischevDA_Spring-boot" options="-parameters" />
+      <module name="3.1.2_Bootstrap_KonischevDA" options="-parameters" />
     </option>
   </component>
 </project>
